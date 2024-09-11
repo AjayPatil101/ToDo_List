@@ -52,24 +52,22 @@
         </div>
     </nav>
 
-    <div class="container my-4">
-        <h2 class="text-center">TODOs List</h2>
+    <div class="container my-4" style="width: 70%; margin: auto; border: 2px solid rgb(248, 248, 248); ">
+        <h2 class="text-center p-2">TODOs List</h2>
 
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+            <input type="text" class="form-control" id="title" placeholder="Enter item title" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">Add an item to the list</small>
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3"></textarea>
+            <textarea class="form-control" id="description" rows="3" placeholder="Enter item description"></textarea>
         </div>
-
 
         <button id="add" class="btn btn-primary">Add to list</button>
         <button id="clear" class="btn btn-primary" onclick="clearStorage()">Clear list</button>
-
 
         <div id="items" class="my-4">
             <h2>Your Items</h2>
@@ -83,13 +81,7 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Get some Coffee</td>
-                        <td>You need coffee as you are a coder</td>
-                        <td><button class="btn btn-sm btn-primary">Delete</button></td>
-                    </tr>
-
+                    <!-- Dynamic content will be injected here -->
                 </tbody>
             </table>
         </div>
@@ -148,12 +140,14 @@
             });
             tableBody.innerHTML = str;
         }
+
         add = document.getElementById("add");
         add.addEventListener("click", getAndUpdate);
         update();
+
         function deleted(itemIndex) {
             console.log("Delete", itemIndex);
-            itemJsonArrayStr = localStorage.getItem('itemsJson')
+            itemJsonArrayStr = localStorage.getItem('itemsJson');
             itemJsonArray = JSON.parse(itemJsonArrayStr);
             // Delete itemIndex element from the array
             itemJsonArray.splice(itemIndex, 1);
@@ -161,30 +155,30 @@
             update();
 
         }
+
         function clearStorage() {
-            if (confirm("Do you areally want to clear?")) {
+            if (confirm("Do you really want to clear?")) {
                 console.log('Clearing the storage')
                 localStorage.clear();
-                update()
+                update();
             }
         }
-        const searchbar = () => {
-            let filter = document.getElementById("search1").value.toUpperCase();
-            let table = document.getElementById("items");
+
+        function searchbar() {
+            let filter = document.querySelector("#search1 input[type='search']").value.toUpperCase();
+            let table = document.getElementById("tableBody");
             let tr = table.getElementsByTagName("tr");
-            for (var i = 0; i < tr.length; i++) {
+            for (let i = 0; i < tr.length; i++) {
                 let td = tr[i].getElementsByTagName('td')[0];
                 if (td) {
-                    let textValue = td.contains || td.innerText;
+                    let textValue = td.textContent || td.innerText;
                     if (textValue.toUpperCase().indexOf(filter) > -1) {
                         tr[i].style.display = "";
-                    }
-                    else {
+                    } else {
                         tr[i].style.display = "none";
                     }
                 }
             }
-
         }
     </script>
 </body>
