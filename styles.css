@@ -1,0 +1,10 @@
+* {
+    font-family: "Times New Roman", Times, serif;
+  }
+  
+  .todo-container {
+    width: 70%;
+    margin: auto;
+    border: 2px solid rgb(248, 248, 248);
+  }
+  
